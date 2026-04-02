@@ -316,8 +316,8 @@ def load_pipeline(file_paths):
     from langchain_community.vectorstores import FAISS
     from langchain_groq import ChatGroq
     from langchain_core.prompts import PromptTemplate
-    from langchain.chains.combine_documents import create_stuff_documents_chain
-    from langchain.chains import create_retrieval_chain
+    from langchain_core.runnables import RunnablePassthrough
+    from langchain_core.output_parsers import StrOutputParser
     from langchain.schema import Document
     from langchain_core.prompts import PromptTemplate
     from langchain_core.runnables import RunnablePassthrough
@@ -387,8 +387,19 @@ Question:
 """
     )
 
-    doc_chain = create_stuff_documents_chain(llm, prompt)
-    qa_chain = create_retrieval_chain(retriever, doc_chain)
+    # Create RAG chain using LCEL
+    def format_docs(docs):
+        return "\n\n".join(doc.page_content for doc in docs)
+
+    qa_chain = (
+        {
+            "context": retriever | format_docs,
+            "input": RunnablePassthrough()
+        }
+        | prompt
+        | llm
+        | StrOutputParser()
+    )
 
     return qa_chain
 
@@ -503,8 +514,7 @@ if uploaded_files:
 
         # Show assistant thinking
         with st.spinner("🧠 Analyzing documents..."):
-            response = qa_chain.invoke({"input": query})
-            answer = response["answer"]
+            answer = qa_chain.invoke(query)
 
         # Show assistant response
         with chat_container:
