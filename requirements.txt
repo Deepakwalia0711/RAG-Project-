@@ -16,3 +16,5 @@ sentence-transformers
 python-dotenv
 pillow
 pypdf
+pdf2image
+pytesseract
