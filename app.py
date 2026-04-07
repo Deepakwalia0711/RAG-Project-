@@ -262,7 +262,7 @@ st.markdown("""
 col1, col2, col3 = st.columns([1, 2, 1])
 
 with col2:
-    st.markdown('<h1 class="title">🚀 AI Document Assistant</h1>', unsafe_allow_html=True)
+    st.markdown('<h1 class="title">🚀 Walia\'s AI Document Assistant</h1>', unsafe_allow_html=True)
     st.markdown('<p class="subtitle">Multi-PDF RAG Chatbot with OCR Support</p>', unsafe_allow_html=True)
 
 # -------------------------------
