@@ -8,8 +8,8 @@ load_dotenv()
 # PAGE CONFIG
 # -------------------------------
 st.set_page_config(
-    page_title="🚀 AI Document Assistant",
-    page_icon="🤖",
+    page_title="🚀 Walia's AI Document Assistant",
+    page_icon="🤖 ",
     layout="wide",
     initial_sidebar_state="expanded"
 )
